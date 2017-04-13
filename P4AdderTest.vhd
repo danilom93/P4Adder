@@ -64,7 +64,7 @@ BEGIN
 		
 		cin <= '0';
 		A <= x"0000FF0E";
-		B <= x"00000AF0";
+		B <= x"0000CAF0";
 		wait for 10 ns;
 		
 		cin <= '0';
