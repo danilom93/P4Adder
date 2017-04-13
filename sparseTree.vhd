@@ -130,7 +130,8 @@ architecture structural of sparseTree is
 				end generate;
 			end generate;
 			
-			G11: if l = nRow-1 generate
+			-- if it is the last row			
+			G11: if (l = nRow-1) generate
 				
 				G12: if ((i+1) mod step) = 0 generate
 				
