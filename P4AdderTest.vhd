@@ -77,6 +77,11 @@ BEGIN
 		B <= x"0FF000F0";
 		wait for 10 ns;
 
+		cin <= '1';
+		A <= x"0F00FF0E";
+		B <= x"0FF000FA";
+		wait for 10 ns;
+
       wait;
    end process;
 
