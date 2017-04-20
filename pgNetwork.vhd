@@ -21,12 +21,14 @@ architecture behavioral of pgNetwork is
   
       for i in 0 to nBits-1 loop
 			
-			if ( i = 0 ) then		
-			
-				P(i) <= a(i) xor b(i);
-				G(i) <= (a(i) and b(i)) or (a(i) and cin) or (b(i) and cin);
+		  if ( i = 0 ) then		
+			 
+        --if it is the first p g I have to take into account the carry input
+        P(i) <= a(i) xor b(i);
+			  G(i) <= (a(i) and b(i)) or (a(i) and cin) or (b(i) and cin);
 			else
-			
+      
+			 --generate the p g network
 				P(i) <= A(i) xor B(i);
 				G(i) <= A(i) and B(i);
 			end if;
