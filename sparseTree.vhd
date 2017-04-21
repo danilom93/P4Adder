@@ -133,7 +133,7 @@ architecture structural of sparseTree is
 					end generate;
 				end generate;
 				
-				-- if the signal has to be bringed to the next level, connect the current row with the previous
+				-- if the signal has to be brought to the next level, connects the current row with the previous
 				G10: if((i mod (2**l))<2**(l-1) and (i mod (2**l))>=0) and (((i+1) mod step) =0) generate
 					
 					pSignal(l)(i) <= pSignal(l-1)(i);
@@ -141,7 +141,7 @@ architecture structural of sparseTree is
 				end generate;
 			end generate;
 			
-			-- if it is the last row, connect the G signals to the carries output			
+			-- if it is the last row, connects the G signals to the carries output			
 			G11: if (l = nRow-1) generate
 				
 				G12: if ((i+1) mod step) = 0 generate
