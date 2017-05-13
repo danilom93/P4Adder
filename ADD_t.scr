@@ -1,0 +1,57 @@
+##############################################################
+#SCRIPT FOR SPEEDING UP and RECORDING the ADDER SYNTHESIS#
+# analyzing and checking vhdl netlist#
+# here the analyze command is used for each file from bottom to top #
+##############################################################
+
+analyze -library WORK -format vhdl {functions.vhd}
+analyze -library WORK -format vhdl {blockG.vhd}
+analyze -library WORK -format vhdl {blockPG.vhd}
+analyze -library WORK -format vhdl {pgNetwork.vhd}
+analyze -library WORK -format vhdl {mux_2to1.vhd}
+analyze -library WORK -format vhdl {mux21_generic.vhd}
+analyze -library WORK -format vhdl {fa.vhd}
+analyze -library WORK -format vhdl {rca.vhd}
+analyze -library WORK -format vhdl {carrySelectBlock.vhd}
+analyze -library WORK -format vhdl {carrySelect.vhd}
+analyze -library WORK -format vhdl {sparseTree.vhd}
+analyze -library WORK -format vhdl {P4Adder.vhd}
+
+
+##############################################################
+# elaborating the top entity -- here supposed P4ADD#
+# choose the architecture you want
+
+elaborate P4ADDER -architecture STRUCTURAL -library WORK -parameters "nBits = 32, step = 4"
+
+##########################################
+# first compilation, without constraints #
+
+compile 
+
+# reporting riming and power after the first synthesis without constraints #
+
+report_timing > ADD_timeopt_1t.rpt
+report_area > ADD_timeopt_1a.rpt
+
+# forces a combinational max delay of REQUIRED_TIME from each of the inputs
+# to each of th eoutput, that is a delay lower than the one found after
+# the first compilation step #
+# often this is the working clock period of your system #
+
+set_max_delay 0.48 -from [all_inputs] -to [all_outputs]
+
+# optimize
+
+compile -map_effort high
+
+# save report
+
+report_timing > ADD_timeopt_2t.rpt
+report_area > ADD_timeopt_2a.rpt
+
+# saving files
+
+write -hierarchy -format ddc -output ADD-structural-topt.ddc
+write -hierarchy -format vhdl -output ADD-structural-topt.vhdl
+write -hierarchy -format verilog -output ADD-structural-topt.v
